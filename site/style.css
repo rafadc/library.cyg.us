@@ -1,0 +1,27 @@
+:root {
+    --light-goldenrod-yellow: #f2f6d0ff;
+    --honeydew: #d0e1d4ff;
+    --bone: #d9d2b6ff;
+    --windsor-tan: #9f602dff;
+    --sage: #AAAE7F;
+}
+
+body {
+    background-color: var(--sage);
+    font-family: "Goudy Bookletter 1911", "Open Sans", sans-serif;
+    font-size: 1.6rem;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    background-color: var(--bone);
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+h1, h2 ,h3 {
+    color: var(--windsor-tan);
+}
