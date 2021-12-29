@@ -14,6 +14,7 @@ use tui::style::Style;
 use tui::widgets::Paragraph;
 
 use crate::app_state::AppState;
+use crate::openlibrary;
 
 pub fn open_ui() -> Result<(), Box<dyn Error>> {
     enable_raw_mode()?;
@@ -47,7 +48,9 @@ fn run_app<B: Backend>(terminal: &mut Terminal<B>, mut app: AppState) -> io::Res
 
         if let Event::Key(key) = event::read()? {
             match key.code {
-                KeyCode::Enter => {}
+                KeyCode::Enter => {
+                    app.search_results = openlibrary::search_books(&app.input);
+                }
                 KeyCode::Char(c) => {
                     app.input.push(c);
                 }

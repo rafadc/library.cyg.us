@@ -1,7 +1,9 @@
+use crate::book::Book;
+
 pub struct AppState {
     pub input: String,
     pub cursor_position: u8,
-    pub search_results: Vec<String>
+    pub search_results: Vec<Book>
 }
 
 impl Default for AppState {
