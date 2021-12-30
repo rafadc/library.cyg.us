@@ -102,17 +102,7 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &mut AppState) {
         .split(vertical_layout[1]);
 
     render_book_list(f, app, &horizontal_layout);
-
-    let block = Block::default().title("Description").borders(Borders::ALL);
-    let description_text = match app.search_results.state.selected() {
-        Some(index) => app.search_results.items[index].synopsis.clone(),
-        _ => "".to_string()
-    };
-    let description = Paragraph::new(description_text)
-        .style(Style::default())
-        .wrap(Wrap { trim: false })
-        .block(block);
-    f.render_widget(description, horizontal_layout[1]);
+    render_synopsis(f, app, &horizontal_layout)
 }
 
 fn render_search_box<B: Backend>(f: &mut Frame<B>, app: &AppState, vertical_layout: &Vec<Rect>) {
@@ -141,4 +131,17 @@ fn render_book_list<B: Backend>(f: &mut Frame<B>, app: &mut AppState, horizontal
         )
         .highlight_symbol(">> ");
     f.render_stateful_widget(book_list, horizontal_layout[0], &mut app.search_results.state);
+}
+
+fn render_synopsis<B: Backend>(f: &mut Frame<B>, app: &AppState, horizontal_layout: &Vec<Rect>) {
+    let block = Block::default().title("Description").borders(Borders::ALL);
+    let description_text = match app.search_results.state.selected() {
+        Some(index) => app.search_results.items[index].synopsis.clone(),
+        _ => "".to_string()
+    };
+    let description = Paragraph::new(description_text)
+        .style(Style::default())
+        .wrap(Wrap { trim: false })
+        .block(block);
+    f.render_widget(description, horizontal_layout[1]);
 }
