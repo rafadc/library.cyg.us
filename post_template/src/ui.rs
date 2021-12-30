@@ -10,8 +10,10 @@ use tui::{
     widgets::{Block, Borders},
     Frame, Terminal,
 };
-use tui::style::Style;
-use tui::widgets::Paragraph;
+use tui::layout::Rect;
+use tui::style::{Color, Modifier, Style};
+use tui::text::{Span, Spans};
+use tui::widgets::{List, ListItem, Paragraph};
 
 use crate::app_state::AppState;
 use crate::openlibrary;
@@ -44,7 +46,7 @@ pub fn open_ui() -> Result<(), Box<dyn Error>> {
 
 fn run_app<B: Backend>(terminal: &mut Terminal<B>, mut app: AppState) -> io::Result<()> {
     loop {
-        terminal.draw(|f| ui(f, &app))?;
+        terminal.draw(|f| ui(f, &mut app))?;
 
         if let Event::Key(key) = event::read()? {
             match key.code {
@@ -60,13 +62,22 @@ fn run_app<B: Backend>(terminal: &mut Terminal<B>, mut app: AppState) -> io::Res
                 KeyCode::Esc => {
                     return Ok(());
                 }
+                KeyCode::Left => {
+                    app.search_results.unselect();
+                }
+                KeyCode::Down => {
+                    app.search_results.next();
+                }
+                KeyCode::Up => {
+                    app.search_results.previous();
+                }
                 _ => {}
             }
         }
     }
 }
 
-fn ui<B: Backend>(f: &mut Frame<B>, app: &AppState) {
+fn ui<B: Backend>(f: &mut Frame<B>, app: &mut AppState) {
     let vertical_layout = Layout::default()
         .direction(Direction::Vertical)
         .constraints(
@@ -78,10 +89,7 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &AppState) {
         )
         .split(f.size());
 
-    let search = Paragraph::new(app.input.as_ref())
-        .style(Style::default())
-        .block(Block::default().borders(Borders::ALL).title("Input"));
-    f.render_widget(search, vertical_layout[0]);
+    render_search_box(f, app, &vertical_layout);
 
     let horizontal_layout = Layout::default()
         .direction(Direction::Horizontal)
@@ -95,9 +103,33 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &AppState) {
         .split(vertical_layout[1]);
 
     let block = Block::default().title("Books").borders(Borders::ALL);
-    f.render_widget(block, horizontal_layout[0]);
+    let book_items: Vec<ListItem> = app
+        .search_results
+        .items
+        .iter()
+        .map(|book| {
+            ListItem::new(book.title.clone()).style(Style::default())
+        })
+        .collect();
+    let book_list = List::new(book_items)
+        .block(block)
+        .highlight_style(
+            Style::default()
+                .bg(Color::LightGreen)
+                .add_modifier(Modifier::BOLD),
+        )
+        .highlight_symbol(">> ");
+    f.render_stateful_widget(book_list, horizontal_layout[0], &mut app.search_results.state);
+
 
     let block = Block::default().title("Description").borders(Borders::ALL);
     f.render_widget(block, horizontal_layout[1]);
+}
+
+fn render_search_box<B: Backend>(f: &mut Frame<B>, app: &AppState, vertical_layout: &Vec<Rect>) {
+    let search = Paragraph::new(app.input.as_ref())
+        .style(Style::default())
+        .block(Block::default().borders(Borders::ALL).title("Input"));
+    f.render_widget(search, vertical_layout[0]);
 }
 
