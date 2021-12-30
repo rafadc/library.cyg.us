@@ -104,7 +104,11 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &mut AppState) {
     render_book_list(f, app, &horizontal_layout);
 
     let block = Block::default().title("Description").borders(Borders::ALL);
-    let description = Paragraph::new(app.input.as_ref())
+    let description_text = match app.search_results.state.selected() {
+        Some(index) => app.search_results.items[index].synopsis.clone(),
+        _ => "".to_string()
+    };
+    let description = Paragraph::new(description_text)
         .style(Style::default())
         .wrap(Wrap { trim: false })
         .block(block);
