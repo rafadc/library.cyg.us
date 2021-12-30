@@ -12,8 +12,7 @@ use tui::{
 };
 use tui::layout::Rect;
 use tui::style::{Color, Modifier, Style};
-use tui::text::{Span, Spans};
-use tui::widgets::{List, ListItem, Paragraph};
+use tui::widgets::{List, ListItem, Paragraph, Wrap};
 
 use crate::app_state::AppState;
 use crate::openlibrary;
@@ -105,7 +104,11 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &mut AppState) {
     render_book_list(f, app, &horizontal_layout);
 
     let block = Block::default().title("Description").borders(Borders::ALL);
-    f.render_widget(block, horizontal_layout[1]);
+    let description = Paragraph::new(app.input.as_ref())
+        .style(Style::default())
+        .wrap(Wrap { trim: false })
+        .block(block);
+    f.render_widget(description, horizontal_layout[1]);
 }
 
 fn render_search_box<B: Backend>(f: &mut Frame<B>, app: &AppState, vertical_layout: &Vec<Rect>) {
