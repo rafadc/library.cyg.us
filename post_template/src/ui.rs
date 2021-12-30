@@ -102,6 +102,20 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &mut AppState) {
         )
         .split(vertical_layout[1]);
 
+    render_book_list(f, app, &horizontal_layout);
+
+    let block = Block::default().title("Description").borders(Borders::ALL);
+    f.render_widget(block, horizontal_layout[1]);
+}
+
+fn render_search_box<B: Backend>(f: &mut Frame<B>, app: &AppState, vertical_layout: &Vec<Rect>) {
+    let search = Paragraph::new(app.input.as_ref())
+        .style(Style::default())
+        .block(Block::default().borders(Borders::ALL).title("Input"));
+    f.render_widget(search, vertical_layout[0]);
+}
+
+fn render_book_list<B: Backend>(f: &mut Frame<B>, app: &mut AppState, horizontal_layout: &Vec<Rect>) {
     let block = Block::default().title("Books").borders(Borders::ALL);
     let book_items: Vec<ListItem> = app
         .search_results
@@ -115,21 +129,9 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &mut AppState) {
         .block(block)
         .highlight_style(
             Style::default()
-                .bg(Color::LightGreen)
+                .fg(Color::Yellow)
                 .add_modifier(Modifier::BOLD),
         )
         .highlight_symbol(">> ");
     f.render_stateful_widget(book_list, horizontal_layout[0], &mut app.search_results.state);
-
-
-    let block = Block::default().title("Description").borders(Borders::ALL);
-    f.render_widget(block, horizontal_layout[1]);
 }
-
-fn render_search_box<B: Backend>(f: &mut Frame<B>, app: &AppState, vertical_layout: &Vec<Rect>) {
-    let search = Paragraph::new(app.input.as_ref())
-        .style(Style::default())
-        .block(Block::default().borders(Borders::ALL).title("Input"));
-    f.render_widget(search, vertical_layout[0]);
-}
-
