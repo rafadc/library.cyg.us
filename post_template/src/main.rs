@@ -7,6 +7,7 @@ mod openlibrary;
 mod stateful_list;
 mod ui;
 
-fn main() -> Result<(), Box<dyn Error>> {
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn Error>> {
     open_ui()
 }

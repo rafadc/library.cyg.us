@@ -4,6 +4,7 @@ use crossterm::{
     terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
 };
 use std::{error::Error, io};
+use futures::executor::block_on;
 use tui::{
     backend::{Backend, CrosstermBackend},
     layout::{Constraint, Direction, Layout},
@@ -23,6 +24,8 @@ pub fn open_ui() -> Result<(), Box<dyn Error>> {
     execute!(stdout, EnterAlternateScreen, EnableMouseCapture)?;
     let backend = CrosstermBackend::new(stdout);
     let mut terminal = Terminal::new(backend)?;
+    terminal.clear()?;
+    terminal.hide_cursor()?;
 
     let app = AppState::default();
     let res = run_app(&mut terminal, app);
@@ -50,7 +53,10 @@ fn run_app<B: Backend>(terminal: &mut Terminal<B>, mut app: AppState) -> io::Res
         if let Event::Key(key) = event::read()? {
             match key.code {
                 KeyCode::Enter => {
-                    app.search_results = openlibrary::search_books(&app.input);
+                    match block_on(openlibrary::search_books(&app.input)) {
+                        Ok(result) => app.search_results = result,
+                        Err(error) => panic!("Unexpected response from book search: {}", error)
+                    }
                 }
                 KeyCode::Char(c) => {
                     app.input.push(c);
