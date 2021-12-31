@@ -138,7 +138,7 @@ fn render_book_list<B: Backend>(f: &mut Frame<B>, app: &mut AppState, horizontal
 fn render_synopsis<B: Backend>(f: &mut Frame<B>, app: &AppState, horizontal_layout: &Vec<Rect>) {
     let block = Block::default().title("Description").borders(Borders::ALL);
     let description_text = match app.search_results.state.selected() {
-        Some(index) => app.search_results.items[index].synopsis.clone(),
+        Some(index) => app.search_results.items[index].description.clone(),
         _ => "".to_string()
     };
     let description = Paragraph::new(description_text)
