@@ -17,6 +17,7 @@ use tui::widgets::{List, ListItem, Paragraph, Wrap};
 
 use crate::app_state::AppState;
 use crate::openlibrary;
+use crate::template_generator::generate_template;
 
 pub fn open_ui() -> Result<(), Box<dyn Error>> {
     enable_raw_mode()?;
@@ -49,9 +50,9 @@ fn run_app<B: Backend>(terminal: &mut Terminal<B>, mut app: AppState) -> io::Res
         if let Event::Key(key) = event::read()? {
             match key.code {
                 KeyCode::Enter => {
-                    match block_on(openlibrary::search_books(&app.input)) {
-                        Ok(result) => app.search_results = result,
-                        Err(error) => panic!("Unexpected response from book search: {}", error)
+                    match app.search_results.state.selected() {
+                        None => search_books(&mut app),
+                        Some(selected) => return generate_template(&app.search_results.items[selected])
                     }
                 }
                 KeyCode::Char(c) => {
@@ -75,6 +76,13 @@ fn run_app<B: Backend>(terminal: &mut Terminal<B>, mut app: AppState) -> io::Res
                 _ => {}
             }
         }
+    }
+}
+
+fn search_books(app: &mut AppState) {
+    match block_on(openlibrary::search_books(&app.input)) {
+        Ok(result) => app.search_results = result,
+        Err(error) => panic!("Unexpected response from book search: {}", error)
     }
 }
 

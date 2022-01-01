@@ -51,7 +51,7 @@ fn openlibrary_to_book(doc: OpenLibraryDocument) -> Book {
 
     Book {
         title: doc.title,
-        author: author_names,
+        authors: author_names,
         openlibrary_id: openlibrary_id,
         openlibrary_author_ids: author_ids,
         description: description

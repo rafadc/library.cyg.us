@@ -5,6 +5,7 @@ mod app_state;
 mod book;
 mod openlibrary;
 mod stateful_list;
+mod template_generator;
 mod ui;
 
 #[tokio::main]
