@@ -16,10 +16,17 @@ struct OpenLibraryResponse {
     docs: Vec<OpenLibraryDocument>
 }
 
-pub async fn search_books(query: &String) -> Result<StatefulList<Book>, Box<dyn std::error::Error>> {
+pub async fn search_books(title: &String) -> Result<StatefulList<Book>, Box<dyn std::error::Error>> {
     let client = reqwest::Client::new();
+    let query = format!("title:{},language:eng", title);
+    let query_params = [
+        ("q", &query),
+        ("fields", &String::from("key,title,author_name,author_key")),
+        ("limit", &String::from("40"))
+    ];
+
     let openlibrary_response = client.get("http://openlibrary.org/search.json")
-        .query(&[("title", query),("limit", &String::from("30"))])
+        .query(&query_params)
         .send()
         .await?
         .json::<OpenLibraryResponse>()
