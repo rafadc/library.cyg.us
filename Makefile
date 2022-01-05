@@ -28,3 +28,7 @@ serve:
 
 clean:
 	rm -rf output
+
+update_binaries:
+	cd post_template; cargo build
+

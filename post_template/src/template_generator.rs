@@ -2,6 +2,7 @@ use std::fs;
 use tinytemplate::TinyTemplate;
 use crate::book::Book;
 use serde::Serialize;
+use slug::slugify;
 
 static TEMPLATE : &'static str = "---\n\
 title: {book.title}\n\
@@ -31,7 +32,9 @@ pub fn generate_template(book: &Book) -> Result<(), std::io::Error> {
     };
 
     let rendered = tt.render("book", &context).unwrap();
-    fs::write("foo.txt", rendered).unwrap();
+
+    let book_slug = slugify(&book.title);
+    fs::write(format!("site/books/{}.md", book_slug), rendered).unwrap();
 
     Ok(())
 }
