@@ -10,4 +10,5 @@ Feel free to check [my blog](http://joy.pm) or [my twitter account](https://twit
 
 ## Books
 
+* [Drive](/books/drive.html)
 * [Good strategy/Bad strategy](/books/good-strategy-bad-strategy.html)

@@ -1,7 +1,8 @@
 ---
 title: Good strategy / Bad strategy
-author: Richard Rummelt
+authors: [Richard Rummelt]
 openlibrary_id: OL25030541M
+openlibrary_cover_edition_id: OL25030541M
 openlibrary_author_ids: [OL1187744A]
 ---
 
