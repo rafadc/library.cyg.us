@@ -21,7 +21,7 @@ assets:
 	cp -r site/assets output/
 
 watch:
-	ag -l | entr sh -c 'make'
+	ag -l | entr sh -c 'make clean && make'
 
 serve:
 	browser-sync start --server './output' --files "site/**/*"
@@ -31,4 +31,3 @@ clean:
 
 update_binaries:
 	cd post_template; cargo build
-
