@@ -13,8 +13,10 @@
 <body>
     $if(openlibrary_id)$
     <div class="container">
-        <span><h1>$title$</h1> <h3>by $author$</h3></span>
-        <span><img src="/assets/covers/$openlibrary_id$.jpg" /></span>
+        <div class="header">
+            <span><h1>$title$</h1> <h3>by $authors$</h3></span>
+            <span class="cover"><img src="/assets/covers/$openlibrary_cover_edition_id$.jpg" /></span>
+        </div>
     </div>
     $endif$
     <div class="container">
