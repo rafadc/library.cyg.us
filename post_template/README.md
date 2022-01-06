@@ -9,3 +9,6 @@ A simple CLI to create a new template to retrieve metadata from a book. It downl
 * [ ] Show a "searching" dialog when blocked by search or even better.
 * [ ] Async search
 * [ ] Parameter for searching in another language
+* [ ] Parameter option to update images
+* [ ] Parameter option to update metadata on an existing md
+* [ ] Warn not to overwrite file
