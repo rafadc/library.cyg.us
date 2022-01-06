@@ -7,6 +7,7 @@ use serde::Deserialize;
 struct OpenLibraryDocument {
     key: String,
     title: String,
+    cover_edition_key: Option<String>,
     author_name: Option<Vec<String>>,
     author_key: Option<Vec<String>>
 }
@@ -21,7 +22,7 @@ pub async fn search_books(title: &String) -> Result<StatefulList<Book>, Box<dyn 
     let query = format!("title:{},language:eng", title);
     let query_params = [
         ("q", &query),
-        ("fields", &String::from("key,title,author_name,author_key")),
+        ("fields", &String::from("key,title,author_name,author_key,cover_edition_key")),
         ("limit", &String::from("40"))
     ];
 
@@ -60,6 +61,7 @@ fn openlibrary_to_book(doc: OpenLibraryDocument) -> Book {
         title: doc.title,
         authors: author_names,
         openlibrary_id: openlibrary_id,
+        openlibrary_cover_edition_id: doc.cover_edition_key,
         openlibrary_author_ids: author_ids,
         description: description
     }

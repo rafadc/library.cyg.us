@@ -17,7 +17,6 @@ use tui::widgets::{List, ListItem, Paragraph, Wrap};
 
 use crate::app_state::AppState;
 use crate::openlibrary;
-use crate::template_generator::generate_template;
 
 pub fn open_ui() -> Result<(), Box<dyn Error>> {
     enable_raw_mode()?;
@@ -43,7 +42,7 @@ pub fn open_ui() -> Result<(), Box<dyn Error>> {
 }
 
 
-fn run_app<B: Backend>(terminal: &mut Terminal<B>, mut app: AppState) -> io::Result<()> {
+fn run_app<B: Backend>(terminal: &mut Terminal<B>, mut app: AppState) -> Result<(), Box<dyn std::error::Error>> {
     loop {
         terminal.draw(|f| ui(f, &mut app))?;
 
@@ -52,7 +51,7 @@ fn run_app<B: Backend>(terminal: &mut Terminal<B>, mut app: AppState) -> io::Res
                 KeyCode::Enter => {
                     match app.search_results.state.selected() {
                         None => search_books(&mut app),
-                        Some(selected) => return generate_template(&app.search_results.items[selected])
+                        Some(selected) => return app.search_results.items[selected].crete_metadata()
                     }
                 }
                 KeyCode::Char(c) => {

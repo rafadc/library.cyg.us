@@ -8,6 +8,7 @@ static TEMPLATE : &'static str = "---\n\
 title: {book.title}\n\
 authors: [{book.authors | as_comma_separated_list}]\n\
 openlibrary_id: {book.openlibrary_id}\n\
+openlibrary_cover_edition_id: {book.openlibrary_cover_edition_id}\n\
 openlibrary_author_ids: [{book.openlibrary_author_ids | as_comma_separated_list}]\n\
 ---\
 ";

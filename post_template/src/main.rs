@@ -3,6 +3,7 @@ use crate::ui::open_ui;
 
 mod app_state;
 mod book;
+mod download_images;
 mod openlibrary;
 mod stateful_list;
 mod template_generator;
