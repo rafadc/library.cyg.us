@@ -10,5 +10,8 @@ Feel free to check [my blog](http://joy.pm) or [my twitter account](https://twit
 
 ## Books
 
+* [Thinking fast and slow](/books/thinking-fast-and-slow.html)
 * [Drive](/books/drive.html)
 * [Good strategy/Bad strategy](/books/good-strategy-bad-strategy.html)
+* [Range](/books/range.html)
+* [The prince](/books/the-prince.html)
