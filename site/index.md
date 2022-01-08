@@ -7,11 +7,3 @@ Taking notes is the best way of reflecting about information so this is my tiny 
 The whole site is built using scripts and [Pandoc](http://www.pandoc.org). Feel free to check [the github repo](https://github.com/rafadc/library.joy.pm) to see how it is built.
 
 Feel free to check [my blog](http://joy.pm) or [my twitter account](https://twitter.com/rafadc/).
-
-## Books
-
-* [Thinking fast and slow](/books/thinking-fast-and-slow.html)
-* [Drive](/books/drive.html)
-* [Good strategy/Bad strategy](/books/good-strategy-bad-strategy.html)
-* [Range](/books/range.html)
-* [The prince](/books/the-prince.html)

@@ -5,23 +5,36 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>$title$</title>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.1/sql-wasm.js" integrity="sha512-14M7CqWNUr6fzrgs9ncNWKdBtLu69HwEWq7J3/dPMUL+za3fBRLJvK6egAu4SSlxCM1apqsbVJHArGLl5fjldw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Goudy+Bookletter+1911&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.6.0/dt-1.11.3/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.6.0/dt-1.11.3/datatables.min.js"></script>
+
     <link rel="stylesheet" href="/style.css">
+    <script type="text/javascript" src="/index.js"></script>
 </head>
 <body>
-    $if(openlibrary_id)$
-    <div class="container">
-        <div class="header">
-            <span><h1>$title$</h1> <h3>by $authors$</h3></span>
-            <span class="cover"><img src="/assets/covers/$openlibrary_cover_edition_id$.jpg" /></span>
-        </div>
-    </div>
-    $endif$
     <div class="container">
         $body$
+    </div>
+    <div class="container">
+        <table id="book_list" class="display">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Last Updated</th>
+                    <th>Finished reading</th>
+                </tr>
+            </thead>
+            <tbody id="book_table_body">
+
+            </tbody>
+        </table>
     </div>
 </body>
 </html>
