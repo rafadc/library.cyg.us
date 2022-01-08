@@ -5,6 +5,7 @@ A simple CLI to create a new template to retrieve metadata from a book. It downl
 ## Roadmap
 
 * [ ] Exit with CTRL-C
+* [ ] Download images for a book in parallel
 * [ ] Show the synopsis of a book
 * [ ] Show a "searching" dialog when blocked by search or even better.
 * [ ] Async search
