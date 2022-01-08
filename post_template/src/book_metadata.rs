@@ -26,7 +26,10 @@ impl BookMetadata {
 
     pub fn crete_consolidated_files(&self) -> Result<(), Box<dyn Error>> {
         generate_template(self)?;
+        self.update_consolidated_files()
+    }
 
+    pub fn update_consolidated_files(&self) -> Result<(), Box<dyn Error>> {
         match &self.openlibrary_cover_edition_id {
             Some(edition_id) => block_on(download_cover(edition_id))?,
             _ => ()
@@ -36,10 +39,7 @@ impl BookMetadata {
             .clone()
             .into_iter()
             .for_each(|x| block_on(download_author(&x)).unwrap());
-        Ok(())
-    }
 
-    pub fn update_consolidated_files(&self) -> Result<(), Box<dyn Error>> {
         Ok(())
     }
 }
