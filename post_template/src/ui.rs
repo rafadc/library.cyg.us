@@ -54,7 +54,7 @@ fn run_app<B: Backend>(terminal: &mut Terminal<B>, mut app: UIState) -> Result<(
                 KeyCode::Enter => {
                     match app.search_results.state.selected() {
                         None => search_books(&mut app),
-                        Some(selected) => return app.search_results.items[selected].crete_metadata()
+                        Some(selected) => return app.search_results.items[selected].crete_consolidated_files()
                     }
                 }
                 KeyCode::Char(c) => {

@@ -13,14 +13,13 @@ pub struct BookMetadata {
 }
 
 impl BookMetadata {
-    pub fn crete_metadata(&self) -> Result<(), Box<dyn std::error::Error>> {
+    pub fn crete_consolidated_files(&self) -> Result<(), Box<dyn std::error::Error>> {
         generate_template(self)?;
 
         match &self.openlibrary_cover_edition_id {
             Some(edition_id) => block_on(download_cover(edition_id))?,
             _ => ()
         }
-
 
         self.openlibrary_author_ids
             .clone()

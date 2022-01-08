@@ -18,8 +18,8 @@ struct Args {
     update_file: Option<String>,
 
     /// Refresh all metadata
-    #[clap(short, long)]
-    refresh: bool,
+    #[clap(long)]
+    refresh_all: bool,
 }
 
 
