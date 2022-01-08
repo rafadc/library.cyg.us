@@ -6,6 +6,7 @@ use crate::book_metadata::BookMetadata;
 mod book_metadata;
 mod download_images;
 mod openlibrary;
+mod sqlite;
 mod template_generator;
 mod ui;
 

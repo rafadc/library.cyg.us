@@ -4,6 +4,8 @@ A simple CLI to create a new template to retrieve metadata from a book. It downl
 
 ## Usage
 
+It is expected to be run from library.cyg.us root folder. It looks for some relative paths at the moment.
+
 ```shell
 post_template 0.1.0
 
