@@ -1,5 +1,8 @@
+use std::error::Error;
+use std::fs;
 use futures::executor::block_on;
 use serde::{Deserialize, Serialize};
+use yaml_front_matter::{Document, YamlFrontMatter};
 use crate::download_images::{download_author, download_cover};
 use crate::template_generator::generate_template;
 
@@ -13,7 +16,15 @@ pub struct BookMetadata {
 }
 
 impl BookMetadata {
-    pub fn crete_consolidated_files(&self) -> Result<(), Box<dyn std::error::Error>> {
+    pub fn from_file(filename: String) -> BookMetadata{
+        let contents = fs::read_to_string(filename)
+            .expect("Something went wrong reading the file");
+
+        let document: Document<BookMetadata> = YamlFrontMatter::parse::<BookMetadata>(&contents).unwrap();
+        document.metadata
+    }
+
+    pub fn crete_consolidated_files(&self) -> Result<(), Box<dyn Error>> {
         generate_template(self)?;
 
         match &self.openlibrary_cover_edition_id {
@@ -25,6 +36,10 @@ impl BookMetadata {
             .clone()
             .into_iter()
             .for_each(|x| block_on(download_author(&x)).unwrap());
+        Ok(())
+    }
+
+    pub fn update_consolidated_files(&self) -> Result<(), Box<dyn Error>> {
         Ok(())
     }
 }
