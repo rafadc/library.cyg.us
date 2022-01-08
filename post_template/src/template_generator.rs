@@ -1,6 +1,6 @@
 use std::fs;
 use tinytemplate::TinyTemplate;
-use crate::book::Book;
+use crate::book::BookMetadata;
 use serde::Serialize;
 use slug::slugify;
 
@@ -15,13 +15,13 @@ openlibrary_author_ids: [{book.openlibrary_author_ids | as_comma_separated_list}
 
 #[derive(Serialize)]
 pub struct TemplateContext<'a> {
-    pub book: &'a Book,
+    pub book: &'a BookMetadata,
     pub printable_authors: String,
     pub printable_author_ids: String,
 }
 
 
-pub fn generate_template(book: &Book) -> Result<(), std::io::Error> {
+pub fn generate_template(book: &BookMetadata) -> Result<(), std::io::Error> {
     let mut tt = TinyTemplate::new();
     tt.add_formatter("as_comma_separated_list", as_comma_separated_list);
     tt.add_template("book", TEMPLATE).unwrap();

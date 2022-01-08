@@ -15,7 +15,7 @@ use tui::layout::Rect;
 use tui::style::{Color, Modifier, Style};
 use tui::widgets::{List, ListItem, Paragraph, Wrap};
 
-use crate::app_state::AppState;
+use crate::app_state::UIState;
 use crate::openlibrary;
 
 pub fn open_ui() -> Result<(), Box<dyn Error>> {
@@ -27,7 +27,7 @@ pub fn open_ui() -> Result<(), Box<dyn Error>> {
     terminal.clear()?;
     terminal.hide_cursor()?;
 
-    let app = AppState::default();
+    let app = UIState::default();
     let res = run_app(&mut terminal, app);
 
     disable_raw_mode()?;
@@ -42,7 +42,7 @@ pub fn open_ui() -> Result<(), Box<dyn Error>> {
 }
 
 
-fn run_app<B: Backend>(terminal: &mut Terminal<B>, mut app: AppState) -> Result<(), Box<dyn std::error::Error>> {
+fn run_app<B: Backend>(terminal: &mut Terminal<B>, mut app: UIState) -> Result<(), Box<dyn std::error::Error>> {
     loop {
         terminal.draw(|f| ui(f, &mut app))?;
 
@@ -78,14 +78,14 @@ fn run_app<B: Backend>(terminal: &mut Terminal<B>, mut app: AppState) -> Result<
     }
 }
 
-fn search_books(app: &mut AppState) {
+fn search_books(app: &mut UIState) {
     match block_on(openlibrary::search_books(&app.input)) {
         Ok(result) => app.search_results = result,
         Err(error) => panic!("Unexpected response from book search: {}", error)
     }
 }
 
-fn ui<B: Backend>(f: &mut Frame<B>, app: &mut AppState) {
+fn ui<B: Backend>(f: &mut Frame<B>, app: &mut UIState) {
     let vertical_layout = Layout::default()
         .direction(Direction::Vertical)
         .constraints(
@@ -114,14 +114,14 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &mut AppState) {
     render_synopsis(f, app, &horizontal_layout)
 }
 
-fn render_search_box<B: Backend>(f: &mut Frame<B>, app: &AppState, vertical_layout: &Vec<Rect>) {
+fn render_search_box<B: Backend>(f: &mut Frame<B>, app: &UIState, vertical_layout: &Vec<Rect>) {
     let search = Paragraph::new(app.input.as_ref())
         .style(Style::default())
         .block(Block::default().borders(Borders::ALL).title("Input"));
     f.render_widget(search, vertical_layout[0]);
 }
 
-fn render_book_list<B: Backend>(f: &mut Frame<B>, app: &mut AppState, horizontal_layout: &Vec<Rect>) {
+fn render_book_list<B: Backend>(f: &mut Frame<B>, app: &mut UIState, horizontal_layout: &Vec<Rect>) {
     let block = Block::default().title("Books").borders(Borders::ALL);
     let book_items: Vec<ListItem> = app
         .search_results
@@ -142,10 +142,13 @@ fn render_book_list<B: Backend>(f: &mut Frame<B>, app: &mut AppState, horizontal
     f.render_stateful_widget(book_list, horizontal_layout[0], &mut app.search_results.state);
 }
 
-fn render_synopsis<B: Backend>(f: &mut Frame<B>, app: &AppState, horizontal_layout: &Vec<Rect>) {
+fn render_synopsis<B: Backend>(f: &mut Frame<B>, app: &UIState, horizontal_layout: &Vec<Rect>) {
     let block = Block::default().title("Description").borders(Borders::ALL);
     let description_text = match app.search_results.state.selected() {
-        Some(index) => app.search_results.items[index].description.clone(),
+        Some(index) => {
+            let selected_book = &app.search_results.items[index];
+            format!("Key: {} \nAuthors: {:?}", selected_book.openlibrary_id, selected_book.authors)
+        },
         _ => "".to_string()
     };
     let description = Paragraph::new(description_text)

@@ -1,5 +1,7 @@
 use std::error::Error;
 use crate::ui::open_ui;
+use crate::update_file_metadata::update_file_metadata;
+use clap::Parser;
 
 mod app_state;
 mod book;
@@ -8,8 +10,27 @@ mod openlibrary;
 mod stateful_list;
 mod template_generator;
 mod ui;
+mod update_file_metadata;
+
+#[derive(Parser, Debug)]
+#[clap(about, version, author)]
+struct Args {
+    /// Name of the markdown file to update
+    #[clap(short, long)]
+    update_file: Option<String>,
+
+    /// Refresh all metadata
+    #[clap(short, long)]
+    refresh: bool,
+}
+
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
-    open_ui()
+    let args = Args::parse();
+
+    match args.update_file {
+        Some(filename) => update_file_metadata(filename).await,
+        _ => open_ui()
+    }
 }

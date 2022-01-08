@@ -1,5 +1,4 @@
-use std::fmt::format;
-use crate::book::Book;
+use crate::book::BookMetadata;
 use crate::stateful_list::StatefulList;
 use serde::Deserialize;
 
@@ -17,7 +16,7 @@ struct OpenLibraryResponse {
     docs: Vec<OpenLibraryDocument>
 }
 
-pub async fn search_books(title: &String) -> Result<StatefulList<Book>, Box<dyn std::error::Error>> {
+pub async fn search_books(title: &String) -> Result<StatefulList<BookMetadata>, Box<dyn std::error::Error>> {
     let client = reqwest::Client::new();
     let query = format!("title:{},language:eng", title);
     let query_params = [
@@ -42,7 +41,7 @@ pub async fn search_books(title: &String) -> Result<StatefulList<Book>, Box<dyn 
     Ok(StatefulList::with_items(books))
 }
 
-fn openlibrary_to_book(doc: OpenLibraryDocument) -> Book {
+fn openlibrary_to_book(doc: OpenLibraryDocument) -> BookMetadata {
     let openlibrary_id = doc.key.replace("/works/", "");
 
     let author_names = match doc.author_name {
@@ -55,14 +54,11 @@ fn openlibrary_to_book(doc: OpenLibraryDocument) -> Book {
         None => vec![]
     };
 
-    let description = format(format_args!("Key: {} \nAuthors: {:?}", openlibrary_id, author_names));
-
-    Book {
+    BookMetadata {
         title: doc.title,
         authors: author_names,
         openlibrary_id: openlibrary_id,
         openlibrary_cover_edition_id: doc.cover_edition_key,
         openlibrary_author_ids: author_ids,
-        description: description
     }
 }

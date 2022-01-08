@@ -1,14 +1,14 @@
-use crate::book::Book;
+use crate::book::BookMetadata;
 use crate::stateful_list::StatefulList;
 
-pub struct AppState {
+pub struct UIState {
     pub input: String,
-    pub search_results: StatefulList<Book>
+    pub search_results: StatefulList<BookMetadata>,
 }
 
-impl Default for AppState {
-    fn default() -> AppState {
-        AppState {
+impl Default for UIState {
+    fn default() -> UIState {
+        UIState {
             input: String::new(),
             search_results: StatefulList::with_items(vec![]),
         }

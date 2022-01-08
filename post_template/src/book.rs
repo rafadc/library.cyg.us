@@ -1,19 +1,18 @@
 use futures::executor::block_on;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use crate::download_images::{download_author, download_cover};
 use crate::template_generator::generate_template;
 
-#[derive(Serialize)]
-pub struct Book {
+#[derive(Serialize, Deserialize, Debug)]
+pub struct BookMetadata {
     pub title: String,
     pub authors: Vec<String>,
     pub openlibrary_id: String,
     pub openlibrary_cover_edition_id: Option<String>,
     pub openlibrary_author_ids: Vec<String>,
-    pub description: String
 }
 
-impl Book {
+impl BookMetadata {
     pub fn crete_metadata(&self) -> Result<(), Box<dyn std::error::Error>> {
         generate_template(self)?;
 
