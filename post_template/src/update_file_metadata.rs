@@ -1,7 +1,7 @@
 use std::error::Error;
 use std::fs;
 use yaml_front_matter::{Document, YamlFrontMatter};
-use crate::book::BookMetadata;
+use crate::book_metadata::BookMetadata;
 
 pub async fn update_file_metadata(filename: String) -> Result<(), Box<dyn Error>>{
     let contents = fs::read_to_string(filename)

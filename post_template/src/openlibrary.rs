@@ -1,5 +1,5 @@
-use crate::book::BookMetadata;
-use crate::stateful_list::StatefulList;
+use crate::book_metadata::BookMetadata;
+use crate::ui::stateful_list::StatefulList;
 use serde::Deserialize;
 
 #[derive(Deserialize, Debug)]

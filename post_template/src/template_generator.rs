@@ -1,6 +1,6 @@
 use std::fs;
 use tinytemplate::TinyTemplate;
-use crate::book::BookMetadata;
+use crate::book_metadata::BookMetadata;
 use serde::Serialize;
 use slug::slugify;
 

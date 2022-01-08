@@ -7,16 +7,19 @@ use std::{error::Error, io};
 use futures::executor::block_on;
 use tui::{
     backend::{Backend, CrosstermBackend},
+    Frame,
     layout::{Constraint, Direction, Layout},
-    widgets::{Block, Borders},
-    Frame, Terminal,
+    Terminal, widgets::{Block, Borders},
 };
 use tui::layout::Rect;
 use tui::style::{Color, Modifier, Style};
 use tui::widgets::{List, ListItem, Paragraph, Wrap};
 
-use crate::app_state::UIState;
+use app_state::UIState;
 use crate::openlibrary;
+
+mod app_state;
+pub mod stateful_list;
 
 pub fn open_ui() -> Result<(), Box<dyn Error>> {
     enable_raw_mode()?;

@@ -3,11 +3,9 @@ use crate::ui::open_ui;
 use crate::update_file_metadata::update_file_metadata;
 use clap::Parser;
 
-mod app_state;
-mod book;
+mod book_metadata;
 mod download_images;
 mod openlibrary;
-mod stateful_list;
 mod template_generator;
 mod ui;
 mod update_file_metadata;
