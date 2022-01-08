@@ -4,6 +4,8 @@ authors: [Richard Rummelt]
 openlibrary_id: OL25030541M
 openlibrary_cover_edition_id: OL25030541M
 openlibrary_author_ids: [OL1187744A]
+finished_at: 2021-06-01
+last_updated_at: 2022-01-08
 ---
 
 This has become one of my most cited books. I've read it a lot and I've used it a lot.

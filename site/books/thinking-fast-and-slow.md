@@ -4,6 +4,8 @@ authors: ["Daniel Kahneman","Daniel Kahneman"]
 openlibrary_id: OL15992072W
 openlibrary_cover_edition_id: OL25416865M
 openlibrary_author_ids: ["OL2066695A","OL4357407A"]
+finished_at: 2020-03-20
+last_updated_at: 2022-01-08
 ---
 
 ## Summary in one paragraph
