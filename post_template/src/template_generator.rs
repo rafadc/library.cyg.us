@@ -4,7 +4,7 @@ use crate::book_metadata::BookMetadata;
 use serde::Serialize;
 use slug::slugify;
 
-static TEMPLATE : &'static str = "---\n\
+static TEMPLATE : &str = "---\n\
 title: {book.title}\n\
 authors: [{book.authors | as_comma_separated_list}]\n\
 openlibrary_id: {book.openlibrary_id}\n\
@@ -44,7 +44,7 @@ fn as_comma_separated_list(value: &serde_json::value::Value, output: &mut String
     let values_as_strings: Vec<String> = value
         .as_array()
         .unwrap()
-        .into_iter()
+        .iter()
         .map(|x| format!("\"{}\"",x.as_str().unwrap().to_string()))
         .collect();
     output.push_str(values_as_strings.join(",").as_str());

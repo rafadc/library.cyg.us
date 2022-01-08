@@ -1,3 +1,4 @@
+use chrono::Local;
 use crate::book_metadata::BookMetadata;
 use crate::ui::stateful_list::StatefulList;
 use serde::Deserialize;
@@ -16,7 +17,7 @@ struct OpenLibraryResponse {
     docs: Vec<OpenLibraryDocument>
 }
 
-pub async fn search_books(title: &String) -> Result<StatefulList<BookMetadata>, Box<dyn std::error::Error>> {
+pub async fn search_books(title: &str) -> Result<StatefulList<BookMetadata>, Box<dyn std::error::Error>> {
     let client = reqwest::Client::new();
     let query = format!("title:{},language:eng", title);
     let query_params = [
@@ -35,7 +36,7 @@ pub async fn search_books(title: &String) -> Result<StatefulList<BookMetadata>, 
     let books = openlibrary_response
         .docs
         .into_iter()
-        .map(|doc| openlibrary_to_book(doc))
+        .map(openlibrary_to_book)
         .collect();
 
     Ok(StatefulList::with_items(books))
@@ -57,8 +58,10 @@ fn openlibrary_to_book(doc: OpenLibraryDocument) -> BookMetadata {
     BookMetadata {
         title: doc.title,
         authors: author_names,
-        openlibrary_id: openlibrary_id,
+        openlibrary_id,
         openlibrary_cover_edition_id: doc.cover_edition_key,
         openlibrary_author_ids: author_ids,
+        finished_at: None,
+        last_updated_at: Local::today().naive_local()
     }
 }

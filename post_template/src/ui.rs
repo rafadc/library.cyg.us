@@ -117,14 +117,14 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &mut UIState) {
     render_synopsis(f, app, &horizontal_layout)
 }
 
-fn render_search_box<B: Backend>(f: &mut Frame<B>, app: &UIState, vertical_layout: &Vec<Rect>) {
+fn render_search_box<B: Backend>(f: &mut Frame<B>, app: &UIState, vertical_layout: &[Rect]) {
     let search = Paragraph::new(app.input.as_ref())
         .style(Style::default())
         .block(Block::default().borders(Borders::ALL).title("Input"));
     f.render_widget(search, vertical_layout[0]);
 }
 
-fn render_book_list<B: Backend>(f: &mut Frame<B>, app: &mut UIState, horizontal_layout: &Vec<Rect>) {
+fn render_book_list<B: Backend>(f: &mut Frame<B>, app: &mut UIState, horizontal_layout: &[Rect]) {
     let block = Block::default().title("Books").borders(Borders::ALL);
     let book_items: Vec<ListItem> = app
         .search_results
@@ -145,7 +145,7 @@ fn render_book_list<B: Backend>(f: &mut Frame<B>, app: &mut UIState, horizontal_
     f.render_stateful_widget(book_list, horizontal_layout[0], &mut app.search_results.state);
 }
 
-fn render_synopsis<B: Backend>(f: &mut Frame<B>, app: &UIState, horizontal_layout: &Vec<Rect>) {
+fn render_synopsis<B: Backend>(f: &mut Frame<B>, app: &UIState, horizontal_layout: &[Rect]) {
     let block = Block::default().title("Description").borders(Borders::ALL);
     let description_text = match app.search_results.state.selected() {
         Some(index) => {

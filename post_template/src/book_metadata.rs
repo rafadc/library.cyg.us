@@ -1,5 +1,6 @@
 use std::error::Error;
 use std::fs;
+use chrono::{NaiveDate};
 use futures::executor::block_on;
 use serde::{Deserialize, Serialize};
 use yaml_front_matter::{Document, YamlFrontMatter};
@@ -13,6 +14,8 @@ pub struct BookMetadata {
     pub openlibrary_id: String,
     pub openlibrary_cover_edition_id: Option<String>,
     pub openlibrary_author_ids: Vec<String>,
+    pub finished_at: Option<NaiveDate>,
+    pub last_updated_at: NaiveDate,
 }
 
 impl BookMetadata {
@@ -30,9 +33,8 @@ impl BookMetadata {
     }
 
     pub fn update_consolidated_files(&self) -> Result<(), Box<dyn Error>> {
-        match &self.openlibrary_cover_edition_id {
-            Some(edition_id) => block_on(download_cover(edition_id))?,
-            _ => ()
+        if let Some(edition_id) = &self.openlibrary_cover_edition_id {
+            block_on(download_cover(edition_id))?;
         }
 
         self.openlibrary_author_ids
@@ -43,3 +45,4 @@ impl BookMetadata {
         Ok(())
     }
 }
+
