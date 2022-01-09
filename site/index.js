@@ -1,5 +1,4 @@
 function addToTable(element) {
-    console.log("Row:", element);
     const newTRow = document.createElement("tr");
 
     const title = document.createElement("td");
