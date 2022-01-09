@@ -10,13 +10,13 @@ function addToTable(element) {
     title.appendChild(link);
     newTRow.appendChild(title);
 
-    const lastUpdatedAt = document.createElement("td");
-    lastUpdatedAt.innerText = element[2];
-    newTRow.appendChild(lastUpdatedAt);
-
     const finishedReadingAt = document.createElement("td");
-    finishedReadingAt.innerText = element[3];
+    finishedReadingAt.innerText = element[2];
     newTRow.appendChild(finishedReadingAt);
+
+    const lastUpdatedAt = document.createElement("td");
+    lastUpdatedAt.innerText = element[3];
+    newTRow.appendChild(lastUpdatedAt);
 
     document.getElementById("book_table_body").appendChild(newTRow);
 }
@@ -44,7 +44,8 @@ document.addEventListener("DOMContentLoaded", function() {
             result[0].values.forEach(addToTable);
 
             $('#book_list').DataTable( {
-                "info":     false
+                "info": false,
+                "order": [[2, 'desc']]
             } );
         };
 
