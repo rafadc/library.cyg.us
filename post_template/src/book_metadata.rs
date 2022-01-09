@@ -5,7 +5,7 @@ use futures::executor::block_on;
 use serde::{Deserialize, Serialize};
 use yaml_front_matter::{Document, YamlFrontMatter};
 use crate::download_images::{download_author, download_cover};
-use crate::sqlite::migrate_db;
+use crate::sqlite::update_db;
 use crate::template_generator::generate_template;
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -43,7 +43,7 @@ impl BookMetadata {
             .into_iter()
             .for_each(|x| block_on(download_author(&x)).unwrap());
 
-        migrate_db()?;
+        update_db(self)?;
 
         Ok(())
     }
