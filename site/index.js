@@ -3,15 +3,19 @@ function addToTable(element) {
     const newTRow = document.createElement("tr");
 
     const title = document.createElement("td");
-    title.innerText = element[0];
+    const link = document.createElement("a");
+
+    link.innerText = element[0];
+    link.href = `/books/${element[1]}.html`;
+    title.appendChild(link);
     newTRow.appendChild(title);
 
     const lastUpdatedAt = document.createElement("td");
-    lastUpdatedAt.innerText = element[1];
+    lastUpdatedAt.innerText = element[2];
     newTRow.appendChild(lastUpdatedAt);
 
     const finishedReadingAt = document.createElement("td");
-    finishedReadingAt.innerText = element[2];
+    finishedReadingAt.innerText = element[3];
     newTRow.appendChild(finishedReadingAt);
 
     document.getElementById("book_table_body").appendChild(newTRow);
@@ -22,8 +26,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const initSqlJs = window.initSqlJs;
 
     initSqlJs({
-        // Required to load the wasm binary asynchronously. Of course, you can host it wherever you want
-        // You can omit locateFile completely when running in node
         locateFile: file => 'https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.1/sql-wasm.wasm'
     }).then(SQL => {
         xhr = new XMLHttpRequest();
@@ -35,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function() {
             let database_data = new Uint8Array(xhr.response);
             const db = new SQL.Database(database_data);
 
-            let sqlstr = "SELECT title, finished_at, last_updated_at FROM books;";
+            let sqlstr = "SELECT title, slug, finished_at, last_updated_at FROM books;";
 
             const result = db.exec(sqlstr, {});
 
