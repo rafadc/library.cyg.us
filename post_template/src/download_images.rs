@@ -10,7 +10,7 @@ pub async fn download_cover(book_id: &str) -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-pub async fn download_author(author_id: &str) -> Result<(), Box<dyn Error>> {
+pub async fn download_author(author_id: String) -> Result<(), Box<dyn Error>> {
     let image_url = format!("https://covers.openlibrary.org/a/olid/{}-L.jpg", author_id);
     let file_name = format!("./site/assets/authors/{}.jpg", author_id);
     download(image_url, file_name).await?;

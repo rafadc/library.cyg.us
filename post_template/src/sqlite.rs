@@ -3,7 +3,7 @@ use rusqlite::{Connection, params};
 use slug::slugify;
 use crate::BookMetadata;
 
-pub fn update_db(book: &BookMetadata) -> Result<(), Box<dyn Error>>{
+pub async fn update_db(book: &BookMetadata) -> Result<(), Box<dyn Error>>{
    let conn = Connection::open("./site/metadata/books.sqlite")?;
 
     conn.execute(

@@ -1,7 +1,9 @@
 use std::error::Error;
 use std::fs;
+use std::pin::Pin;
 use chrono::{NaiveDate};
 use futures::executor::block_on;
+use futures::future::try_join_all;
 use serde::{Deserialize, Serialize};
 use yaml_front_matter::{Document, YamlFrontMatter};
 use crate::download_images::{download_author, download_cover};
@@ -34,16 +36,20 @@ impl BookMetadata {
     }
 
     pub fn update_consolidated_files(&self) -> Result<(), Box<dyn Error>> {
+        let mut tasks: Vec<Pin<Box<dyn futures::Future<Output = Result<(), Box<dyn Error>>>>>> = vec![];
+
         if let Some(edition_id) = &self.openlibrary_cover_edition_id {
-            block_on(download_cover(edition_id))?;
+            tasks.push(Box::pin(download_cover(edition_id)));
         }
 
         self.openlibrary_author_ids
             .clone()
             .into_iter()
-            .for_each(|x| block_on(download_author(&x)).unwrap());
+            .for_each(|x| tasks.push(Box::pin(download_author(x))));
 
-        update_db(self)?;
+        tasks.push(Box::pin(update_db(self)));
+
+        block_on(try_join_all(tasks)).expect("Running sync");
 
         Ok(())
     }
