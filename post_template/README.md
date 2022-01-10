@@ -27,9 +27,10 @@ We can also choose an already existing markdown file so we can reprocess again a
 ## TODO
 
 * [ ] Exit with CTRL-C
+* [ ] Probably I can serialize the markdown easily with serde straight on instead of using tiny template
+* [ ] Be able to touch book to update last updated field
 * [ ] Show the synopsis of a book
 * [ ] Show a "searching" dialog when blocked by search
 * [ ] Parameter for searching books in another language
 * [ ] Parameter option to update metadata on an existing md
 * [ ] Tags on books
-* [ ] Probably I can serialize the markdown easily with serde straight on instead of using tiny template
