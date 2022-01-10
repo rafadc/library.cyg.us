@@ -27,12 +27,10 @@ We can also choose an already existing markdown file so we can reprocess again a
 ## Roadmap
 
 * [ ] Exit with CTRL-C
-* [ ] Download images for a book in parallel
 * [ ] Show the synopsis of a book
 * [ ] Show a "searching" dialog when blocked by search or even better.
 * [ ] Async search
 * [ ] Parameter for searching in another language
-* [ ] Parameter option to update images
 * [ ] Parameter option to update metadata on an existing md
-* [ ] Warn not to overwrite file
 * [ ] Tags on books
+* [ ] Probably I can serialize the markdown easily with serde straight on instead of using tiny template
