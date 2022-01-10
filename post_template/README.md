@@ -24,13 +24,12 @@ We can start the command with no parameters and a UI to create a new template wi
 
 We can also choose an already existing markdown file so we can reprocess again all metadata we need for the site.
 
-## Roadmap
+## TODO
 
 * [ ] Exit with CTRL-C
 * [ ] Show the synopsis of a book
-* [ ] Show a "searching" dialog when blocked by search or even better.
-* [ ] Async search
-* [ ] Parameter for searching in another language
+* [ ] Show a "searching" dialog when blocked by search
+* [ ] Parameter for searching books in another language
 * [ ] Parameter option to update metadata on an existing md
 * [ ] Tags on books
 * [ ] Probably I can serialize the markdown easily with serde straight on instead of using tiny template
