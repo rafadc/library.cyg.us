@@ -121,6 +121,7 @@ fn render_search_box<B: Backend>(f: &mut Frame<B>, app: &UIState, vertical_layou
     let search = Paragraph::new(app.input.as_ref())
         .style(Style::default())
         .block(Block::default().borders(Borders::ALL).title("Input"));
+    f.set_cursor(u16::try_from(app.input.len()).unwrap() + 1, 1);
     f.render_widget(search, vertical_layout[0]);
 }
 
