@@ -10,6 +10,8 @@ authors: [{book.authors | as_comma_separated_list}]\n\
 openlibrary_id: {book.openlibrary_id}\n\
 openlibrary_cover_edition_id: {book.openlibrary_cover_edition_id}\n\
 openlibrary_author_ids: [{book.openlibrary_author_ids | as_comma_separated_list}]\n\
+finished_at: {book.finished_at}\n
+last_updated_at: {book.last_updated_at}\n
 ---\
 ";
 
