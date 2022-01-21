@@ -25,3 +25,7 @@ Some that I found interesting are:
 
 - The reward is far more effective when it is not exactly clear what it is going to be. Kind of random rewards, gacha style, happen to be more effective.
 - If a user is tricked into thinking that he is already halfway a process or close to finish it he is far more likely to finish it. For example, in the facebook bar for completing your details the progress bar starts already at 50% to give the impression of being already half the task.
+
+The case study in the book is a bible app. The case is extremely well laid out and analyzes worderfully how you can embed cues to your product so it becomes easier to use it.
+
+The book explores this particular area of designing producs that hook users into them. I will definitely go back to him while designing something.
