@@ -47,6 +47,8 @@ The compa ratio is calculated as (salary / midpoint of the range for the positio
 
 Executives have a lot of tools to juggle with this. You don't always have to change salaries but you can use lump sum payments too.
 
+Measure the hispogram if salaries per band and check the shape of the curve. Aim for a bell-shaped curve. Compare this to the recruiting numbers. Use the statistics to evolve.
+
 ## Performance review look from birds eye view
 
 When you see the the global of all the performance reviews you should see the classical bell curve.
