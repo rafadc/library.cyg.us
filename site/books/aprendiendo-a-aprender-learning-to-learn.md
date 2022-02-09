@@ -12,14 +12,14 @@ Unfortunately I could only find this book in Spanish although OpenLibrary has a 
 
 ## Table of contents
 
-1- How the brain works
-2- Concentrating for learning
-3- Thinking for learning
-4- Remembering for learning
-5- Forgetting for learning
-6- Diversifying for learning
-7- Motivating for learning
-8- Self control for learning
+1. How the brain works
+2. Concentrating for learning
+3. Thinking for learning
+4. Remembering for learning
+5. Forgetting for learning
+6. Diversifying for learning
+7. Motivating for learning
+8. Self control for learning
 
 ## Notes on the book
 
